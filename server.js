@@ -5,18 +5,18 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { clerkMiddleware } from "@clerk/express";
-import { connectDB } from "./config/db.js";
+import { connectDB } from "./common/config/db.js";
 import mongoose from "mongoose";
-import authRoute from "./routes/authRoutes.js";
-import settingRoute from "./routes/settingRoutes.js";
-import webHookRoutes from "./routes/webHookRoutes.js";
+import authRoute from "./modules/auth/auth.routes.js";
+import storeRoute from "./modules/store/store.routes.js";
+import webHookRoute from "./modules/webhook/webhook.routes.js";
 
 const app = express();
 
 app.use(
   "/api/webhook",
   bodyParser.raw({ type: "application/json" }),
-  webHookRoutes
+  webHookRoute
 );
 app.use(express.json());
 app.use(
@@ -27,7 +27,7 @@ app.use(
 );
 app.use(clerkMiddleware());
 app.use("/api/auth", authRoute);
-app.use("/api/setting", settingRoute);
+app.use("/api/setting", storeRoute);
 
 app.get("/health", (req, res) => {
   res.status(200).json({ message: "Surprisingly, nothing is on fire" });
