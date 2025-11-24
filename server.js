@@ -27,7 +27,7 @@ app.use(
 );
 app.use(clerkMiddleware());
 app.use("/api/auth", authRoute);
-app.use("/api/setting", storeRoute);
+app.use("/api/configStore", storeRoute);
 
 app.get("/health", (req, res) => {
   res.status(200).json({ message: "Surprisingly, nothing is on fire" });
